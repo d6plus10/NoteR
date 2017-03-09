@@ -54,3 +54,31 @@ export function VN_getNote(id) {
         type: "NOTE_GET",
     }
 }
+
+//Search updates
+export function VN_updateSearchLimit(limit) {
+	return {
+		type: "SEARCH_UP_LIMIT",
+		payload: limit
+	}
+}
+export function VN_updateSearchStart(start) {
+    return {
+        type: "SEARCH_UP_START",
+		payload: start
+    }
+}
+export function VN_updateSearchOrder(order) {
+    return {
+        type: "SEARCH_UP_ORDER",
+		payload: order
+    }
+}
+export function VN_updateSearchId(id) {
+    return {
+        type: "SEARCH_UP_ID",
+        payload: id
+    }
+}
+
+

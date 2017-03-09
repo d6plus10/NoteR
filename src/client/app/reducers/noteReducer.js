@@ -49,9 +49,19 @@ export const addNoteReducer = (state = {
 };
 
 export const viewNoteReducer = (state = {
-    id: 0,
-    contents: "",
-    createDate: "",
+    notes: [
+        {
+            id: 1,
+            contents: "",
+            creationDate: ""
+        }
+    ],
+    search : {
+		limit: "",
+		start: "",
+		order: "DESC",
+		id: ""
+	},
     loading: false,
     error: false
 }, action) => {
@@ -106,6 +116,44 @@ export const viewNoteReducer = (state = {
         case "NOTE_GET_SUCC":
             state = {
                 ...state,
+            };
+            break;
+
+		//Searches ---------------------------------------------
+		case "SEARCH_UP_LIMIT":
+            state = {
+                ...state,
+				search: {
+					...state.search,
+					limit: action.payload
+				}
+            };
+			break;
+        case "SEARCH_UP_START":
+            state = {
+                ...state,
+                search: {
+                    ...state.search,
+                    start: action.payload
+                }
+            };
+            break;
+        case "SEARCH_UP_ORDER":
+            state = {
+                ...state,
+                search: {
+                    ...state.search,
+                    order: action.payload
+                }
+            };
+            break;
+        case "SEARCH_UP_ID":
+            state = {
+                ...state,
+                search: {
+                    ...state.search,
+                    id: action.payload
+                }
             };
             break;
     }
