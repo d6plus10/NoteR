@@ -1,11 +1,11 @@
 import React from "react";
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
 
-import AddNote from "../components/AddNote";
-import Notes from "./Notes";
-import {Root} from "../components/Root";
-import {NFPage} from "../components/NFPage";
-import {Home} from "../components/Home";
+import AddNote from "../containers/AddNote";
+import Notes from "../containers/Notes";
+import {Root} from "./Root";
+import {NFPage} from "./NFPage";
+import {Home} from "./Home";
 
 export default class App extends React.Component {
 	render() {

@@ -3115,20 +3115,20 @@ fieldset[disabled] .btn-default.focus {
   background-color: #333;
 }
 .btn-primary, #add_note_button, #search_notes_button{
-  color: #000000;
-  background-color: #CB6D03;
+  color: #ffffff;
+  background-color: #f98f19;
   border-color: #A00F00;
 }
 .btn-primary:focus,
 .btn-primary.focus {
-    color: #000000;
-    background-color: #CB6D03;
-    border-color: #A00F00;
+  color: #ffffff;
+  background-color: #f98f19;
+  border-color: #A00F00;
 }
 .btn-primary:hover {
-    color: #000000;
-    background-color: #CB6D03;
-    border-color: #A00F00;
+  color: #ffffff;
+  background-color: #f98f19;
+  border-color: #A00F00;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -6767,7 +6767,7 @@ button.close {
 
 #add_note_button{
     float: right;
-    margin-top: 5px;
+    margin: 10px;
 }
 
 .new_rule{

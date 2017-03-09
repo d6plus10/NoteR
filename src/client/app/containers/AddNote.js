@@ -7,12 +7,7 @@ class AddNote extends React.Component {
 		super(props);
 
 		this.state = {
-            id: 0,
-			note: "",
-			contents: "",
-			createDate: "",
-			loading: false,
-            error: false
+			note: ""
         };
 
 		this.addNewNote = this.addNewNote.bind(this);

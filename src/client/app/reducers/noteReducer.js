@@ -14,8 +14,7 @@ const noteReducer = (state = {
 			console.log("Reducer state: $1", state);
 			state = {
 				...state,
-				loading: true,
-				error: false,
+
 			};
 			break;
 		//Add Note action fail
@@ -24,7 +23,7 @@ const noteReducer = (state = {
             state = {
                 ...state,
 				loading: false,
-				error: true,
+				error: action.error
             };
             break;
         //Add Note action success
@@ -32,9 +31,7 @@ const noteReducer = (state = {
             console.log("Reducer state: $1", state);
             state = {
                 ...state,
-				error: false,
-				loading: false,
-                contents: ""
+				error: action.error
             };
             break;
 		//Delete Note action
