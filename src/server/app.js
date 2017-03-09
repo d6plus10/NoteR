@@ -9,20 +9,21 @@ const routes = require('./routes/index');
 
 const app = express();
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'html');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//Adding logger middleware
 app.use(logger('dev'));
+
+//Adding body-parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+//Adding cookieparser middleware
 app.use(cookieParser());
+
+
 app.use(express.static(path.join(__dirname, 'client')));
 
+//Add routes
 app.use('/', routes);
-// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -31,19 +32,18 @@ app.use((req, res, next) => {
   next(err);
 });
 
-// error handlers
+// Error Handlers ------------
 
-// development error handler
+// Dev error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
-  app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    res.json({
-      message: err.message,
-      error: err
-    });
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: err
   });
-}
+});
+
 
 // production error handler
 // no stacktraces leaked to user
@@ -54,6 +54,5 @@ app.use((err, req, res, next) => {
     error: {}
   });
 });
-
 
 module.exports = app;

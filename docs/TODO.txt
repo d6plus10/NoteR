@@ -1,0 +1,1 @@
+- Relearn component lifecycle in order to better understand updating state

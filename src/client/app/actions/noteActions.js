@@ -2,12 +2,16 @@ import axios from "axios";
 
 //Action which adds notes
 export function addNote(strContents) {
-	console.log("Add note was called!!!");
+
+	//console.log("Adding note: " + strContents); //DEBUG
 
 	return dispatch => {
 		axios.post("/api/note/add", {strContents: strContents})
+			.then(() => {
+				dispatch({type: "NOTE_ADD_SUCC"})
+			})
 			.catch((err) => {
-				dispatch({type: "NOTE_ADD_FAIL", payload: err})
+				dispatch({type: "NOTE_ADD_FAIL"})
 			})
 	};
 
@@ -22,26 +26,3 @@ export function deleteNote(id) {
 		}
 	}
 }
-
-/*
-//Creates delayed (A-synchronous) action
-return dispatch => {
-	setTimeout(() => {
-		dispatch( {
-			type:"SET_NAME",
-			payload: name
-		});
-	}, 2000);
-}
-
-//Promise example, something to do with connecting to a database
-return {
-	type: "SET_NAME",
-	payload: new Promise((resolve, reject) => {
-		setTimeout(() => {
-			resolve(name);
-		},2000);
-
-	})
-};
-*/

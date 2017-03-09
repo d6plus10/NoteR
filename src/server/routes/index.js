@@ -7,19 +7,16 @@ const connectionString = 'postgres://jmzgodmvcjdpou:f2a5e054e7e55f8da9b08376c331
 
 //Non API gets
 router.get('/', (req, res, next) => {
-    console.log("Wants front page");
     res.sendFile(path.join(
     __dirname, '..', '..', '..' ,'dist', 'app', 'index.html'));
 });
 
 router.get('/bootstrap.css', (req, res, next) => {
-    console.log("Wants css");	
     res.sendFile(path.join(
     __dirname, '..', '..', '..' ,'dist', 'app', 'bootstrap.css'));
 });
 
 router.get('/bundle.js', (req, res, next) => {
-    console.log("Wants bundle");
     res.sendFile(path.join(
     __dirname, '..', '..', '..' ,'dist', 'app', 'bundle.js'));
 });
@@ -48,8 +45,11 @@ router.get('/note', (req, res, next) => {
 
 //Add note
 router.post('/api/note/add', (req, res, next) => {
-    var receivedId = 0;
-    var data = {text: req.body.strContents}; // Grab data from http request
+    let receivedId = 0;
+    let data = req.body.strContents; // Grab data from http request
+
+    //DEBUG
+    console.log("Received str: " + data);
 
     // Get a Postgres client from the connection pool
     pg.defaults.ssl = true;
@@ -65,8 +65,6 @@ router.post('/api/note/add', (req, res, next) => {
         {
             console.log("Connected to server!")
         }
-
-        data = "TESTTTYYYY";   //DEBUG
 
         // SQL Query > Add note
         client.query("INSERT INTO Note(noteText) VALUES('" + data + "') RETURNING id", function(err, result) {
@@ -168,6 +166,12 @@ router.put('/api/note/:id', (req, res, next) => {
 
         return res.json({success: true, data: true});
     });
+});
+
+//404 catch
+router.get('*', (req, res, next) => {
+    res.sendFile(path.join(
+        __dirname, '..', '..', '..' ,'dist', 'app', 'index.html'));
 });
 
 module.exports = router;

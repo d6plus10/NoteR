@@ -2,10 +2,11 @@
 //Reducers take a state, and an action, and create a new state for you
 
 const noteReducer = (state = {
-	id: 1,
-	contents: "New note",
-	createDate: "Replace this with an initial date",
-	error: "None"
+    id: 0,
+    contents: "",
+    createDate: "",
+    loading: false,
+    error: false
 }, action) => {
 	switch (action.type) {
 		//Add Note action
@@ -13,7 +14,8 @@ const noteReducer = (state = {
 			console.log("Reducer state: $1", state);
 			state = {
 				...state,
-				contents: action.payload.contents
+				loading: true,
+				error: false,
 			};
 			break;
 		//Add Note action fail
@@ -21,7 +23,18 @@ const noteReducer = (state = {
             console.log("Reducer state: $1", state);
             state = {
                 ...state,
-                contents: action.payload.contents
+				loading: false,
+				error: true,
+            };
+            break;
+        //Add Note action success
+        case "NOTE_ADD_SUCC":
+            console.log("Reducer state: $1", state);
+            state = {
+                ...state,
+				error: false,
+				loading: false,
+                contents: ""
             };
             break;
 		//Delete Note action
