@@ -32,19 +32,17 @@ export default class Notes extends React.Component {
 				</div>
 				<br/>
                 {
-                    this.state.notes.map((item) => {
+                    this.state.notes.map((item, i) => {
 						return (
-							<div key={item.noteId}>
-							<Note noteId={item.noteId} noteContents={item.noteContents}
-								  noteDate={item.noteDate}/>
-							<br/>
+							<div key={i.toString()}>
+								<Note noteId={item.noteId} noteContents={item.noteContents}
+									  noteDate={item.noteDate}/>
+								<br/>
 							</div>
 						)
                     })
                 }
-
 			</div>
-
 		);
 	}
 }
