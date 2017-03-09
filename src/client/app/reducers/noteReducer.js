@@ -51,7 +51,7 @@ export const addNoteReducer = (state = {
 export const viewNoteReducer = (state = {
     notes: [
         {
-            id: 1,
+            id: "",
             contents: "",
             creationDate: ""
         }
@@ -155,6 +155,39 @@ export const viewNoteReducer = (state = {
                     id: action.payload
                 }
             };
+            break;
+		// List Updates -----------------------------------------------
+		case "LIST_UP_NOTE":
+            state = {
+                ...state
+            };
+            state.notes[action.payload.index] = action.payload.contents;
+			break;
+
+		//Search Submits ------------------------------------------------
+		case "SEARCH_ONE":
+			state = {
+				...state
+			};
+			break;
+        case "SEARCH_ONE_SUCC":
+            state = {
+                ...state
+            };
+			//Add note to first array spot
+			state.notes[0] = {
+                id: action.payload.id,
+                contents: action.payload.notetext,
+                creationDate: action.payload.dateadded
+			};
+
+            console.log("Received from search: " + action.payload.id + "," + action.payload.notetext + "," + action.payload.dateadded);
+            break;
+        case "SEARCH_ONE_FAIL":
+            state = {
+                ...state
+            };
+            //Add note to first array spot
             break;
     }
 

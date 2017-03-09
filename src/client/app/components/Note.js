@@ -9,19 +9,21 @@ export default class Note extends React.Component {
 	render() {
 		return (
 			<div>
-				<div>Note ID: {this.props.noteId.toString()} Creation Date: {this.props.noteDate}</div>
+				<div>Note ID: {this.props.noteId} Creation Date: {this.props.noteDate}</div>
 				<br/>
 				<AdvTxtArea onChange={this.props.onContentChange} contents={this.props.noteContents}/>
 				<br/>
-				<button onClick={this.props.onClickUpdate} id="add_note_button" className="btn btn-primary">{"Update"}</button>
-				<button onClick={this.props.onClickDelete} id="add_note_button" className="btn btn-primary">{"Delete"}</button>
+				<button onClick={() => this.props.onClickUpdate(this.props.whichNoteInStore, this.props.noteId, this.props.noteContents)} id="add_note_button" className="btn btn-primary">{"Update"}</button>
+				<button onClick={() => this.props.onClickDelete(this.props.whichNoteInStore, this.props.noteId)} id="add_note_button" className="btn btn-primary">{"Delete"}</button>
 			</div>
 		);
 	}
 }
 
 Note.propTypes = {
-	noteId: React.PropTypes.number.isRequired,
+	whichNoteInStore: React.PropTypes.number.isRequired,
+
+	noteId: React.PropTypes.string.isRequired,
 	noteContents: React.PropTypes.string.isRequired,
 	noteDate: React.PropTypes.string.isRequired,
 

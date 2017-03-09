@@ -27,14 +27,14 @@ export default class NoteSearch extends React.Component {
                     <option>{this.static.ASC}</option>
                 </select>
 
-                <button onClick={this.props.onSearchMany}
+                <button onClick={() => this.props.onSearchMany(this.props.start, this.props.limit, this.props.order)}
                         id="add_note_button" className="btn btn-primary">View Many</button> <br/> <br/> <br/>
                 Note ID: <input onChange={this.props.noteIdOnChange}
                                 value={this.props.noteId}
                                 type="number"
                                 min="1"/>
 
-                <button onChange={this.props.onSearchOne}
+                <button onClick={() => this.props.onSearchOne(this.props.noteId)}
                     id="add_note_button" className="btn btn-primary">View One</button> <br/>
             </div>
         );

@@ -4,7 +4,6 @@ import axios from "axios";
 //Action which adds notes
 export function AN_addNoteToDB(strContents) {
 
-	//console.log("Adding note: " + strContents); //DEBUG
 	return dispatch => {
 		axios.post("/api/note/add", {strContents: strContents})
 			.then((response) => {
@@ -34,21 +33,21 @@ export function AN_updateNote(contents) {
 
 //VIEW NOTE SCREEN ---------------------------------------------------------------------------
 
-//Action which deletes notes
+//Action which deletes notes in db
 export function VN_deleteNoteInDB(id) {
 	return {
 		type: "NOTE_DEL",
 	}
 }
 
-//Action which deletes notes
+//Action which deletes notes in db
 export function VN_updateNoteInDB(id, noteContents) {
     return {
         type: "NOTE_UP",
     }
 }
 
-//Action which deletes notes
+//Action which deletes notes in db
 export function VN_getNote(id) {
     return {
         type: "NOTE_GET",
@@ -78,6 +77,35 @@ export function VN_updateSearchId(id) {
     return {
         type: "SEARCH_UP_ID",
         payload: id
+    }
+}
+
+//Search Submits
+export function VN_submitSearchOne(id) {
+    return dispatch => {
+        axios.get("/api/note/" + id.toString())
+            .then((response) => {
+                dispatch({
+                    type: "SEARCH_ONE_SUCC",
+                    payload: response.data
+                })
+            })
+            .catch(() => {
+                dispatch({
+                    type: "SEARCH_ONE_FAIL"
+                })
+            })
+    };
+}
+
+//Updates specific note in list
+export function VN_updateSpecificNote(index, contents) {
+    return {
+        type: "LIST_UP_NOTE",
+        payload: {
+        	index: index,
+			contents: contents
+		}
     }
 }
 

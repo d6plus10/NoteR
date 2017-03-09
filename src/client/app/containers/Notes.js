@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 import Note from "../components/Note";
 import NoteSearch from "../components/NoteSearch";
 
-import {updateNote, deleteNote, VN_updateSearchLimit, VN_updateSearchOrder, VN_updateSearchStart, VN_updateSearchId} from "../actions/noteActions";
+import {updateNote, deleteNote, VN_updateSearchLimit, VN_updateSearchOrder, VN_updateSearchStart, VN_updateSearchId,
+VN_updateSpecificNote, VN_submitSearchOne} from "../actions/noteActions";
 
 class Notes extends React.Component {
 
@@ -29,36 +30,37 @@ class Notes extends React.Component {
 								noteId={this.props.viewNoteReducer.search.id}
 								noteIdOnChange={this.props.updateSearchId}
 
-								onSearchOne={() => this.props.submitSearchOne(this.props.viewNoteReducer.search.id)}
-								onSearchMany={() => this.props.submitSearchMany(this.props.viewNoteReducer.search.start, this.props.viewNoteReducer.search.limit, this.props.viewNoteReducer.search.order)}
+								onSearchOne={this.props.submitSearchOne}
+								onSearchMany={this.props.submitSearchMany}
 					/>
 
 					<br/><hr/>
+                    {
+                        this.props.viewNoteReducer.notes.map((item, i) => {
+                            return (
+								<div key={i.toString()}>
+									<Note
+										noteId={this.props.viewNoteReducer.notes[i].id}
+										noteDate={this.props.viewNoteReducer.notes[i].creationDate}
+
+										onClickUpdate={this.props.tempOne}
+										onClickDelete={this.props.tempTwo}
+
+										whichNoteInStore={i}
+
+										noteContents={this.props.viewNoteReducer.notes[i].contents}
+										onContentChange={(event) => this.props.updateSpecificNote(event, i)}
+									/>
+									<hr/>
+								</div>
+                            )
+                        })
+                    }
 				</div>
 			</div>
 		);
 	}
 }
-/*
-
- {
- this.state.notes.map((item, i) => {
- return (
- <div key={i.toString()}>
- <Note
- noteId={}
- noteContents={}
- noteDate={}
- onClickUpdate={}
- onClickDelete={}
- onContentChange={}
- />
- <hr/>
- </div>
- )
- })
- }
- */
 
 const mapStateToProps = (state) => {
     return {
@@ -68,20 +70,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateNoteInDB: (textContents) => {
-            dispatch();
-        },
-        deleteNoteFromDB: (textContents) => {
-            dispatch();
-        },
-		getNoteFromDB: (noteId) => {
-			dispatch();
+		tempOne: () => {
+
 		},
-        updateNoteInList: (event) => {
-            dispatch();
-        },
-        deleteNoteInList: (event) => {
-            dispatch();
+        tempTwo: () => {
+
         },
 
 		updateSearchLimit: (event) => {
@@ -101,8 +94,12 @@ const mapDispatchToProps = (dispatch) => {
         	dispatch();
 		},
 		submitSearchOne: (id) => {
-            dispatch();
-        }
+            dispatch(VN_submitSearchOne(id));
+        },
+
+        updateSpecificNote: (event, i) => {
+            dispatch(VN_updateSpecificNote(i, event.target.value));
+        },
     }
 };
 
