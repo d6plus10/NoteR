@@ -1,47 +1,56 @@
 import axios from "axios";
 
+// ADD NOTE SCREEN ------------------------------------------------------------------------
 //Action which adds notes
-export function addNote(strContents) {
+export function AN_addNoteToDB(strContents) {
 
 	//console.log("Adding note: " + strContents); //DEBUG
 	return dispatch => {
 		axios.post("/api/note/add", {strContents: strContents})
-			.then(() => {
-				dispatch({type: "NOTE_ADD_SUCC", error: true})
+			.then((response) => {
+				dispatch({
+					type: "NOTE_ADD_SUCC",
+					payload: {
+						id: response
+					}
+				})
 			})
-			.catch((err) => {
-				dispatch({type: "NOTE_ADD_FAIL", error: false})
+			.catch(() => {
+				dispatch({
+					type: "NOTE_ADD_FAIL"
+				})
 			})
 	};
 }
 
+export function AN_updateNote(contents) {
+	return {
+		type: "NOTE_ADD_UPDATE",
+		payload: contents
+	}
+}
+
+
+
+//VIEW NOTE SCREEN ---------------------------------------------------------------------------
+
 //Action which deletes notes
-export function deleteNote(id) {
+export function VN_deleteNoteInDB(id) {
 	return {
 		type: "NOTE_DEL",
-		payload: {
-			id: id
-		}
 	}
 }
 
 //Action which deletes notes
-export function updateNote(id, noteContents) {
+export function VN_updateNoteInDB(id, noteContents) {
     return {
         type: "NOTE_UP",
-        payload: {
-            id: id,
-			noteContents: noteContents
-        }
     }
 }
 
 //Action which deletes notes
-export function getNote(id) {
+export function VN_getNote(id) {
     return {
         type: "NOTE_GET",
-        payload: {
-            id: id
-        }
     }
 }

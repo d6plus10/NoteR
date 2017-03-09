@@ -1,41 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
-import {addNote} from "../actions/noteActions";
+import {AN_addNoteToDB, AN_updateNote} from "../actions/noteActions";
+import AdvTxtArea from "../components/AdvTxtArea";
 
 class AddNote extends React.Component {
 	constructor(props){
 		super(props);
-
-		this.state = {
-			note: ""
-        };
-
-		this.addNewNote = this.addNewNote.bind(this);
-	}
-
-	onTextChange(event) {
-		this.setState({
-			note: event.target.value
-		});
-	}
-
-	addNewNote() {
-        this.setState({
-            note: ""
-        });
-
-        this.props.addNote(this.state.note);
-
-        alert("Note added");
 	}
 
 	render() {
 		return (
 				<div>
 					<div className="jumbotron">
-						<textarea value={this.state.note} onChange={this.onTextChange.bind(this)} className="new_textarea" placeholder="Note to self..." rows="15" cols="105"/>
+						<AdvTxtArea contents={this.props.addNoteReducer.contents} onChange={this.props.updateNote}/>
 						<br/>
-						<button onClick={this.addNewNote} id="add_note_button" className="btn btn-primary">{"Add Note"}</button>
+						<button onClick={() => this.props.addNoteToDB(this.props.contents)} id="add_note_button" className="btn btn-primary">{"Add Note"}</button>
 					</div>
 				</div>
 		);
@@ -44,14 +23,17 @@ class AddNote extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		note: state.note
+		addNoteReducer: state.addNoteReducer
 	}
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addNote: (textContents) => {
-        	dispatch(addNote(textContents));
+        addNoteToDB: (textContents) => {
+        	dispatch(AN_addNoteToDB(textContents));
+		},
+		updateNote: (event) => {
+        	dispatch(AN_updateNote(event.target.value));
 		}
     }
 };

@@ -82,11 +82,11 @@ class Notes extends React.Component {
 	}
 
     submitDeleteNote (noteId) {
-        updateNote();
+        deleteNote(noteId);
     }
 
     submitUpdateNote (noteId, notecontents) {
-		updateNote();
+		updateNote(noteId, notecontents);
 	}
 
 	render() {

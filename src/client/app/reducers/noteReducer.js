@@ -1,49 +1,114 @@
 //state is a default parameter, here is where I initialize states
-//Reducers take a state, and an action, and create a new state for you
+//Reducers take a state, and an action result, and create a new state for you
 
-const noteReducer = (state = {
+export const addNoteReducer = (state = {
+    id: 0,
+    contents: "",
+    loading: false,
+    error: false
+}, action) => {
+	switch (action.type) {
+		//Add Note -------------------------------------------
+        case "NOTE_ADD_UPDATE":
+            console.log("Reducer state: $1", state);
+            state = {
+                ...state,
+                contents: action.payload
+            };
+            break;
+		case "NOTE_ADD_DB":
+			console.log("Reducer state: $1", state);
+			state = {
+				...state,
+				loading: true,
+				error: false
+			};
+			break;
+		//Add Note fail
+        case "NOTE_ADD_DB_FAIL":
+            console.log("Reducer state: $1", state);
+            state = {
+                ...state,
+				loading: false,
+				error: true
+            };
+            break;
+        //Add Note success
+        case "NOTE_ADD_DB_SUCC":
+            console.log("Reducer state: $1", state);
+            state = {
+                ...state,
+				loading: false,
+				error: false,
+				id: action.payload.id
+            };
+            break;
+	}
+
+	return state;
+};
+
+export const viewNoteReducer = (state = {
     id: 0,
     contents: "",
     createDate: "",
     loading: false,
     error: false
 }, action) => {
-	switch (action.type) {
-		//Add Note action
-		case "NOTE_ADD":
-			console.log("Reducer state: $1", state);
-			state = {
-				...state,
-
-			};
-			break;
-		//Add Note action fail
-        case "NOTE_ADD_FAIL":
-            console.log("Reducer state: $1", state);
+    switch (action.type) {
+        //Update Note --------------------------------------
+        case "NOTE_UP":
             state = {
                 ...state,
-				loading: false,
-				error: action.error
             };
             break;
-        //Add Note action success
-        case "NOTE_ADD_SUCC":
-            console.log("Reducer state: $1", state);
+        //Update Note Fail
+        case "NOTE_UP_FAIL":
             state = {
                 ...state,
-				error: action.error
             };
             break;
-		//Delete Note action
-		case "NOTE_DELETE":
-				state = {
-				...state,
-					error: action.payload
-			};
-			break;
-	}
+        //Update Note Success
+        case "NOTE_UP_SUCC":
+            state = {
+                ...state,
+            };
+            break;
 
-	return state;
+        //Delete Note -------------------------------------------
+        case "NOTE_DEL":
+            state = {
+                ...state,
+            };
+            break;
+        case "NOTE_DEL_FAIL":
+            state = {
+                ...state,
+            };
+            break;
+        case "NOTE_DEL_SUCC":
+            state = {
+                ...state,
+            };
+            break;
+
+        //Get Note ----------------------------------------------
+        case "NOTE_GET":
+            state = {
+                ...state,
+            };
+            break;
+        case "NOTE_GET_FAIL":
+            state = {
+                ...state,
+            };
+            break;
+        case "NOTE_GET_SUCC":
+            state = {
+                ...state,
+            };
+            break;
+    }
+
+    return state;
 };
-
-export default noteReducer;
