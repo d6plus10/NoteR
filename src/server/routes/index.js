@@ -21,17 +21,17 @@ router.get('/bundle.js', (req, res, next) => {
     __dirname, '..', '..', '..' ,'dist', 'app', 'bundle.js'));
 });
 
+router.get('/note/add', (req, res, next) => {
+    res.sendFile(path.join(
+        __dirname, '..', '..', '..' ,'dist', 'app', 'index.html'));
+});
+
 router.get('/note/:id', (req, res, next) => {
     res.sendFile(path.join(
         __dirname, '..', '..', '..' ,'dist', 'app', 'index.html'));
 });
 
 router.get('/home', (req, res, next) => {
-    res.sendFile(path.join(
-        __dirname, '..', '..', '..' ,'dist', 'app', 'index.html'));
-});
-
-router.get('/note/add', (req, res, next) => {
     res.sendFile(path.join(
         __dirname, '..', '..', '..' ,'dist', 'app', 'index.html'));
 });
@@ -45,8 +45,8 @@ router.get('/note', (req, res, next) => {
 
 //Add note
 router.post('/api/note/add', (req, res, next) => {
-    let receivedId = 0;
-    let data = req.body.strContents; // Grab data from http request
+    var receivedId = 0;
+    var data = req.body.strContents; // Grab data from http request
 
     //DEBUG
     console.log("Received str: " + data);

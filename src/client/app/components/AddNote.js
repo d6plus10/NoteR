@@ -5,15 +5,15 @@ import {addNote} from "../actions/noteActions";
 class AddNote extends React.Component {
 	constructor(props){
 		super(props);
-		/*
+
 		this.state = {
             id: 0,
+			note: "",
 			contents: "",
 			createDate: "",
 			loading: false,
             error: false
-        }
-        */
+        };
 
 		this.addNewNote = this.addNewNote.bind(this);
 	}
@@ -25,17 +25,20 @@ class AddNote extends React.Component {
 	}
 
 	addNewNote() {
+        this.setState({
+            note: ""
+        });
+
         this.props.addNote(this.state.note);
-		this.setState({
-			note: ""
-		})
+
+        alert("Note added");
 	}
 
 	render() {
 		return (
 				<div>
 					<div className="jumbotron">
-						<textarea onChange={this.onTextChange.bind(this)} className="new_textarea" placeholder="Note to self..." rows="15" cols="105"/>
+						<textarea value={this.state.note} onChange={this.onTextChange.bind(this)} className="new_textarea" placeholder="Note to self..." rows="15" cols="105"/>
 						<br/>
 						<button onClick={this.addNewNote} id="add_note_button" className="btn btn-primary">{"Add Note"}</button>
 					</div>
