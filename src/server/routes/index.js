@@ -4,8 +4,7 @@ const pg = require('pg');
 const path = require('path');
 var url = require('url');
 
-
-const connectionString = 'postgres://jmzgodmvcjdpou:f2a5e054e7e55f8da9b08376c33174fe33e623922404f4a0934fb8d69d854bcc@ec2-107-22-244-62.compute-1.amazonaws.com:5432/d5mjfmmfviod98?ssl=true';
+const connectionString = 'postgres://dcwkbhyjesakyx:0768fcd6d82ca170e88241008d608ce0524745cc49d8f36fdecebb6f953b52a8@ec2-54-163-234-140.compute-1.amazonaws.com:5432/d80k3v9e48bpao?ssl=true';
 
 //Non API gets
 router.get('/', (req, res, next) => {
