@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A web application that allows you to add, read, update, and delete notes in a database.",
   "scripts": {
-    "start": "node ./src/server/www",
+    "start": "node ./src/server/www"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
