@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pg = require('pg');
 const path = require('path');
+var url = require('url');
+
 
 const connectionString = 'postgres://jmzgodmvcjdpou:f2a5e054e7e55f8da9b08376c33174fe33e623922404f4a0934fb8d69d854bcc@ec2-107-22-244-62.compute-1.amazonaws.com:5432/d5mjfmmfviod98?ssl=true';
 
@@ -86,7 +88,7 @@ router.post('/api/note/add', (req, res, next) => {
     });
 });
 
-//Get note
+//Get one note
 router.get('/api/note/:id', (req, res, next) => {
     const results = [];
     const noteId = req.params.id; //Gets the note parameter
@@ -125,6 +127,61 @@ router.get('/api/note/:id', (req, res, next) => {
     });
 });
 
+//Get several notes
+router.get('/api/note', (req, res, next) => {
+    const results = [];
+
+    //Parse URL
+    var limit = req.param("limit");
+    var order = req.param("order");
+    var start = req.param("start");
+
+    if (start == undefined) {
+        start = "0";
+    }
+
+    if (limit == undefined) {
+        limit = "*";
+    }
+
+    if (order == undefined) {
+        order = "DESC";
+    }
+
+    // Get a Postgres client from the connection pool
+    pg.defaults.ssl = true;
+    pg.connect(connectionString, (err, client, done) => {
+
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        // SQL Query > Select Data
+        const query = client.query("SELECT * FROM Note ORDER BY dateAdded " + order + " LIMIT " + limit + " OFFSET " + start +";");
+
+        // Stream results back one row at a time
+        query.on('row', (row) => {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', () => {
+            done();
+
+            //If nothing was selected
+            if (results == undefined)
+            {
+                return res.status(400).json({success: false, id: err});
+            }
+
+            return res.json(results);
+        });
+    });
+});
+
 //Delete note
 router.delete('/api/note/:id', (req, res, next) => {
     // Grab data from the URL parameters
@@ -142,7 +199,7 @@ router.delete('/api/note/:id', (req, res, next) => {
         }
 
         // SQL Query > Delete Data
-        client.query('DELETE FROM Note WHERE id=(' + noteId + ');');
+        client.query('DELETE FROM Note WHERE id=' + noteId + ';');
 
         return res.json({success: true, data: true});
     });

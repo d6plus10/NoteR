@@ -14,6 +14,7 @@ export const Home = (props) => {
                 <li>Update a note: Modify the contents of an existing note in the database</li>
                 <li>Delete a note: Delete an existing note in the database</li>
             </ul>
+                <br/><h3>By: Jason Gemanaru</h3>
             </div>
         </div>
     );

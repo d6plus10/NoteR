@@ -12,9 +12,9 @@ class AddNote extends React.Component {
 		return (
 				<div>
 					<div className="jumbotron">
-						<AdvTxtArea contents={this.props.addNoteReducer.contents} onChange={this.props.updateNote}/>
+						<AdvTxtArea contents={this.props.addNoteReducer.notetext} onChange={this.props.updateNote}/>
 						<br/>
-						<button onClick={() => this.props.addNoteToDB(this.props.addNoteReducer.contents)} id="add_note_button" className="btn btn-primary">{"Add Note"}</button>
+						<button onClick={() => this.props.addNoteToDB(this.props.addNoteReducer.notetext)} id="add_note_button" className="btn btn-primary">{"Add Note"}</button>
 					</div>
 				</div>
 		);

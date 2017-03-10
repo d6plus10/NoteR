@@ -7,7 +7,7 @@ export default class AdvTxtArea extends React.Component {
 
     render() {
         return (
-            <textarea value={this.props.contents}
+            <textarea value={this.props.notetext}
                       onChange={this.props.onChange}
                       className="new_textarea"
                       placeholder="Note to self..."
@@ -19,5 +19,5 @@ export default class AdvTxtArea extends React.Component {
 
 AdvTxtArea.propTypes = {
     onChange: React.PropTypes.func.isRequired,
-    contents: React.PropTypes.string.isRequired
+    notetext: React.PropTypes.string.isRequired
 };

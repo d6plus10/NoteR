@@ -29,15 +29,23 @@ export function AN_updateNote(contents) {
 	}
 }
 
-
-
 //VIEW NOTE SCREEN ---------------------------------------------------------------------------
 
 //Action which deletes notes in db
 export function VN_deleteNoteInDB(id) {
-	return {
-		type: "NOTE_DEL",
-	}
+    return dispatch => {
+        axios.delete("/api/note/" + id)
+            .then(() => {
+                dispatch({
+                    type: "NOTE_DEL_DB_SUCC",
+                })
+            })
+            .catch(() => {
+                dispatch({
+                    type: "NOTE_DEL_DB_FAIL",
+                })
+            })
+    };
 }
 
 //Action which deletes notes in db
@@ -101,6 +109,23 @@ export function VN_submitSearchOne(id) {
     };
 }
 
+export function VN_submitSearchMany(start, limit, order) {
+    return dispatch => {
+        axios.get("/api/note?limit=" + limit.toString() + "&start=" + start +"&order=" + order)
+            .then((response) => {
+                dispatch({
+                    type: "SEARCH_MANY_SUCC",
+                    payload: response.data
+                })
+            })
+            .catch(() => {
+                dispatch({
+                    type: "SEARCH_MANY_FAIL"
+                })
+            })
+    };
+}
+
 //Updates specific note in list
 export function VN_updateSpecificNote(index, contents) {
     console.log("NUMBER 2 i: " + index.toString(), ", event: " + contents);   //Debug
@@ -109,7 +134,7 @@ export function VN_updateSpecificNote(index, contents) {
         type: "LIST_UP_NOTE",
         payload: {
         	index: index,
-			contents: contents
+			notetext: contents
 		}
     }
 }

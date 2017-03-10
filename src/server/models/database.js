@@ -23,4 +23,8 @@ Script for creating database on heroku
 
 //Select note
  SELECT * from Note WHERE id=1;
+
+ //Select several notes
+ SELECT * FROM Note ORDER BY dateAdded DESC LIMIT NUM OFFSET NUM;
+
  */

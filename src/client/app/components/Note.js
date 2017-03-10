@@ -11,7 +11,7 @@ export default class Note extends React.Component {
 			<div>
 				<div>Note ID: {this.props.noteId} Creation Date: {this.props.noteDate}</div>
 				<br/>
-				<AdvTxtArea onChange={this.props.onContentChange} contents={this.props.noteContents}/>
+				<AdvTxtArea onChange={this.props.onContentChange} notetext={this.props.noteContents}/>
 				<br/>
 				<button onClick={() => this.props.onClickUpdate(this.props.noteId, this.props.noteContents)} id="add_note_button" className="btn btn-primary">{"Update"}</button>
 				<button onClick={() => this.props.onClickDelete(this.props.noteId)} id="add_note_button" className="btn btn-primary">{"Delete"}</button>

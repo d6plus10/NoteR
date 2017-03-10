@@ -5,7 +5,7 @@ import Note from "../components/Note";
 import NoteSearch from "../components/NoteSearch";
 
 import {updateNote, deleteNote, VN_updateSearchLimit, VN_updateSearchOrder, VN_updateSearchStart, VN_updateSearchId,
-    VN_updateSpecificNote, VN_submitSearchOne, VN_updateNoteInDB} from "../actions/noteActions";
+    VN_updateSpecificNote, VN_submitSearchOne, VN_updateNoteInDB, VN_deleteNoteInDB, VN_submitSearchMany} from "../actions/noteActions";
 
 class Notes extends React.Component {
 
@@ -41,8 +41,8 @@ class Notes extends React.Component {
 								<div key={i}>
 									<Note
 										noteId={this.props.viewNoteReducer.notes[i].id}
-										noteDate={this.props.viewNoteReducer.notes[i].creationDate}
-                                        noteContents={this.props.viewNoteReducer.notes[i].contents}
+										noteDate={this.props.viewNoteReducer.notes[i].dateadded}
+                                        noteContents={this.props.viewNoteReducer.notes[i].notetext}
 
 										onClickUpdate={this.props.updateNoteInDB}
 										onClickDelete={this.props.deleteNoteInDB}
@@ -76,11 +76,11 @@ const mapDispatchToProps = (dispatch) => {
         },
 
         deleteNoteInDB: (id) => {
-
+            dispatch(VN_deleteNoteInDB(id))
         },
 
         submitSearchMany: (start, limit, order) => {
-            dispatch();
+            dispatch(VN_submitSearchMany(start, limit, order));
         },
 
         submitSearchOne: (id) => {
@@ -101,8 +101,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(VN_updateSearchId(event.target.value));
         },
         updateSpecificNote: (i, event) => {
-            console.log("i: " + i.toString(), ", event: " + event.target.value);   //Debug
-
             dispatch(VN_updateSpecificNote(i, event.target.value));
         },
     }

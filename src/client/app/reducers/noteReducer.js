@@ -3,7 +3,7 @@
 
 export const addNoteReducer = (state = {
     id: 0,
-    contents: "",
+    notetext: "",
 }, action) => {
 	switch (action.type) {
 		//Add Note -------------------------------------------
@@ -11,7 +11,7 @@ export const addNoteReducer = (state = {
             console.log("Reducer state: $1", state);
             state = {
                 ...state,
-                contents: action.payload
+                notetext: action.payload
             };
             break;
 		case "NOTE_ADD_DB":
@@ -38,18 +38,11 @@ export const addNoteReducer = (state = {
             alert("Note: #" + action.payload.id + " successfully added");
             break;
 	}
-
 	return state;
 };
 
 export const viewNoteReducer = (state = {
-    notes: [
-        {
-            id: "-1",
-            contents: " ",
-            creationDate: " "
-        }
-    ],
+    notes: [],
     search : {
 		limit: "",
 		start: "",
@@ -82,20 +75,22 @@ export const viewNoteReducer = (state = {
             break;
 
         //Delete Note -------------------------------------------
-        case "NOTE_DEL":
+        case "NOTE_DEL_DB":
             state = {
                 ...state,
             };
             break;
-        case "NOTE_DEL_FAIL":
+        case "NOTE_DEL_DB_FAIL":
             state = {
                 ...state,
             };
+            alert("Could not delete note");
             break;
-        case "NOTE_DEL_SUCC":
+        case "NOTE_DEL_DB_SUCC":
             state = {
                 ...state,
             };
+            alert("Note has been deleted");
             break;
 
         //Get Note ----------------------------------------------
@@ -160,7 +155,7 @@ export const viewNoteReducer = (state = {
             //Updates note at specific index
             state.notes[action.payload.index] = {
                 ...state.notes[action.payload.index],
-                contents: action.payload.contents
+                notetext: action.payload.notetext
             };
 			break;
 
@@ -175,17 +170,37 @@ export const viewNoteReducer = (state = {
                 ...state
             };
 			//Add note to first array spot
-			state.notes[0] = {
+            state.notes = [];
+			state.notes.push({
                 id: action.payload.id,
-                contents: action.payload.notetext,
-                creationDate: action.payload.dateadded
-			};
+                notetext: action.payload.notetext,
+                dateadded: action.payload.dateadded
+			});
             break;
         case "SEARCH_ONE_FAIL":
             state = {
                 ...state
             };
             alert("Could not get note, make sure your search parameter is valid");
+            break;
+
+        case "SEARCH_MANY":
+            state = {
+                ...state
+            };
+            break;
+        case "SEARCH_MANY_SUCC":
+            state = {
+                ...state,
+                notes: action.payload
+            };
+
+            break;
+        case "SEARCH_MANY_FAIL":
+            state = {
+                ...state
+            };
+            alert("Could not get notes, make sure your search parameters are valid");
             break;
     }
 

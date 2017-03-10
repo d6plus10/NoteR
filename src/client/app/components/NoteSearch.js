@@ -18,7 +18,7 @@ export default class NoteSearch extends React.Component {
                               type="number" min="1"/>{' '}
                 Start: <input onChange={this.props.startOnChange}
                               value={this.props.start}
-                              type="number" min="1"/>{' '}
+                              type="number" min="0"/>{' '}
                 Order:
                 {' '}
                 <select onChange={this.props.orderOnChange}
