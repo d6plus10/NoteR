@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "A web application that allows you to add, read, update, and delete notes in a database.",
   "scripts": {
-    "start": "npm run build",
-    "build": "webpack -d && cp src/client/app/html/index.html dist/app/index.html && cp src/client/app/html/bootstrap.css dist/app/bootstrap.css && node ./src/server/www"
+    "start": "node ./src/server/www",
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -24,27 +23,14 @@
     "redux-thunk": "^2.2.0",
     "thunk": "0.0.1"
   },
-  "devDependencies": {
-    "babel-core": "^6.23.1",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.11.1",
-    "babel-preset-stage-2": "^6.11.0",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/d6plus10/NoteR-Combined.git"
-  },
   "keywords": [
+    "heroku",
     "react",
     "app"
   ],
+  "engines": {
+    "node": "6.10.0"
+  }
   "author": "Jason Gemanaru",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/d6plus10/NoteR-Combined/issues"
-  },
-  "homepage": "https://github.com/d6plus10/NoteR-Combined#readme"
 }
