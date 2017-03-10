@@ -39,7 +39,6 @@ export default class NoteSearch extends React.Component {
             </div>
         );
     }
-
 };
 
 NoteSearch.propTypes = {

@@ -113,6 +113,13 @@ router.get('/api/note/:id', (req, res, next) => {
         // After all data is returned, close connection and return results
         query.on('end', () => {
             done();
+
+            //If nothing was selected
+            if (results[0] == undefined)
+            {
+                return res.status(400).json({success: false, id: err});
+            }
+
             return res.json(results[0]);
         });
     });
@@ -148,7 +155,7 @@ router.put('/api/note/:id', (req, res, next) => {
     const noteId = req.params.id;
 
     // Grab data from http request
-    const data = {text: req.body.noteText, complete: req.body.complete};
+    const contents = req.body.strContents;
 
     // Get a Postgres client from the connection pool
     pg.defaults.ssl = true;
@@ -162,7 +169,9 @@ router.put('/api/note/:id', (req, res, next) => {
         }
 
         //Update Note
-        client.query('UPDATE Note SET text = "' + data.text + '" WHERE id=' + noteId + ';');
+        var query = 'UPDATE Note SET notetext = \'' + contents + '\' WHERE id=' + noteId + ';';
+        console.log(query);
+        client.query(query);
 
         return res.json({success: true, data: true});
     });

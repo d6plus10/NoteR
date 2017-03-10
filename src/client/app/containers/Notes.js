@@ -5,12 +5,12 @@ import Note from "../components/Note";
 import NoteSearch from "../components/NoteSearch";
 
 import {updateNote, deleteNote, VN_updateSearchLimit, VN_updateSearchOrder, VN_updateSearchStart, VN_updateSearchId,
-VN_updateSpecificNote, VN_submitSearchOne} from "../actions/noteActions";
+    VN_updateSpecificNote, VN_submitSearchOne, VN_updateNoteInDB} from "../actions/noteActions";
 
 class Notes extends React.Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
     }
 
 	render() {
@@ -38,18 +38,18 @@ class Notes extends React.Component {
                     {
                         this.props.viewNoteReducer.notes.map((item, i) => {
                             return (
-								<div key={i.toString()}>
+								<div key={i}>
 									<Note
 										noteId={this.props.viewNoteReducer.notes[i].id}
 										noteDate={this.props.viewNoteReducer.notes[i].creationDate}
+                                        noteContents={this.props.viewNoteReducer.notes[i].contents}
 
-										onClickUpdate={this.props.tempOne}
-										onClickDelete={this.props.tempTwo}
+										onClickUpdate={this.props.updateNoteInDB}
+										onClickDelete={this.props.deleteNoteInDB}
 
 										whichNoteInStore={i}
 
-										noteContents={this.props.viewNoteReducer.notes[i].contents}
-										onContentChange={(event) => this.props.updateSpecificNote(event, i)}
+										onContentChange={(event) => this.props.updateSpecificNote(i, event)}
 									/>
 									<hr/>
 								</div>
@@ -70,16 +70,27 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-		tempOne: () => {
+        //Database related
+        updateNoteInDB: (id, contents) => {
+            dispatch(VN_updateNoteInDB(id, contents));
+        },
 
-		},
-        tempTwo: () => {
+        deleteNoteInDB: (id) => {
 
         },
 
-		updateSearchLimit: (event) => {
+        submitSearchMany: (start, limit, order) => {
+            dispatch();
+        },
+
+        submitSearchOne: (id) => {
+            dispatch(VN_submitSearchOne(id));
+        },
+
+        //State related
+        updateSearchLimit: (event) => {
             dispatch(VN_updateSearchLimit(event.target.value));
-		},
+        },
         updateSearchStart: (event) => {
             dispatch(VN_updateSearchStart(event.target.value));
         },
@@ -89,15 +100,9 @@ const mapDispatchToProps = (dispatch) => {
         updateSearchId: (event) => {
             dispatch(VN_updateSearchId(event.target.value));
         },
+        updateSpecificNote: (i, event) => {
+            console.log("i: " + i.toString(), ", event: " + event.target.value);   //Debug
 
-		submitSearchMany: (start, limit, order) => {
-        	dispatch();
-		},
-		submitSearchOne: (id) => {
-            dispatch(VN_submitSearchOne(id));
-        },
-
-        updateSpecificNote: (event, i) => {
             dispatch(VN_updateSpecificNote(i, event.target.value));
         },
     }

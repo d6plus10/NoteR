@@ -13,8 +13,8 @@ export default class Note extends React.Component {
 				<br/>
 				<AdvTxtArea onChange={this.props.onContentChange} contents={this.props.noteContents}/>
 				<br/>
-				<button onClick={() => this.props.onClickUpdate(this.props.whichNoteInStore, this.props.noteId, this.props.noteContents)} id="add_note_button" className="btn btn-primary">{"Update"}</button>
-				<button onClick={() => this.props.onClickDelete(this.props.whichNoteInStore, this.props.noteId)} id="add_note_button" className="btn btn-primary">{"Delete"}</button>
+				<button onClick={() => this.props.onClickUpdate(this.props.noteId, this.props.noteContents)} id="add_note_button" className="btn btn-primary">{"Update"}</button>
+				<button onClick={() => this.props.onClickDelete(this.props.noteId)} id="add_note_button" className="btn btn-primary">{"Delete"}</button>
 			</div>
 		);
 	}
