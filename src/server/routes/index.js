@@ -49,6 +49,9 @@ router.post('/api/note/add', (req, res, next) => {
     var receivedId = 0;
     var data = req.body.strContents; // Grab data from http request
 
+    //Escape single quotes
+    data = EscapeSingleQuotes(data);
+
     //DEBUG
     console.log("Received str: " + data);
 
@@ -135,17 +138,7 @@ router.get('/api/note', (req, res, next) => {
     var order = req.param("order");
     var start = req.param("start");
 
-    if (start == undefined) {
-        start = "0";
-    }
-
-    if (limit == undefined) {
-        limit = "*";
-    }
-
-    if (order == undefined) {
-        order = "DESC";
-    }
+    start = start - 1; //Subtract 1 for offset syntax
 
     // Get a Postgres client from the connection pool
     pg.defaults.ssl = true;
@@ -158,8 +151,17 @@ router.get('/api/note', (req, res, next) => {
             return res.status(500).json({success: false, data: err});
         }
 
+        var queryString = "SELECT * FROM Note ORDER BY dateAdded " + order;
+
+        if (limit != undefined) {
+            //Include limit in query
+            queryString += " LIMIT " + limit;
+        }
+
+        queryString += " OFFSET " + start +";";
+
         // SQL Query > Select Data
-        const query = client.query("SELECT * FROM Note ORDER BY dateAdded " + order + " LIMIT " + limit + " OFFSET " + start +";");
+        const query = client.query(queryString);
 
         // Stream results back one row at a time
         query.on('row', (row) => {
@@ -211,7 +213,10 @@ router.put('/api/note/:id', (req, res, next) => {
     const noteId = req.params.id;
 
     // Grab data from http request
-    const contents = req.body.strContents;
+    var contents = req.body.strContents;
+
+    //Escape single quotes
+    contents = EscapeSingleQuotes(contents);
 
     // Get a Postgres client from the connection pool
     pg.defaults.ssl = true;
@@ -239,4 +244,11 @@ router.get('*', (req, res, next) => {
         __dirname, '..', '..', '..' ,'dist', 'app', 'index.html'));
 });
 
+function EscapeSingleQuotes(string) {
+    var replace = "'";
+    var replacement = "''";
+    return string.split(replace).join(replacement);
+}
+
 module.exports = router;
+

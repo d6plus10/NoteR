@@ -110,8 +110,21 @@ export function VN_submitSearchOne(id) {
 }
 
 export function VN_submitSearchMany(start, limit, order) {
+
+    //Defaults
+    if (start == "" || start == undefined) {
+        start = "1";
+    }
+
+    //Querystring
+    var queryString = "/api/note?" + "start=" + start +"&order=" + order;
+
+    if (limit != "" && limit != undefined) {
+        queryString += "&limit=" + limit;
+    }
+
     return dispatch => {
-        axios.get("/api/note?limit=" + limit.toString() + "&start=" + start +"&order=" + order)
+        axios.get(queryString)
             .then((response) => {
                 dispatch({
                     type: "SEARCH_MANY_SUCC",
