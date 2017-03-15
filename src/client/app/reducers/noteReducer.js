@@ -33,7 +33,8 @@ export const addNoteReducer = (state = {
             console.log("Reducer state: $1", state);
             state = {
                 ...state,
-				id: action.payload.id
+				id: action.payload.id,
+                notetext: ""
             };
             alert("Note: #" + action.payload.id + " successfully added");
             break;
@@ -181,7 +182,7 @@ export const viewNoteReducer = (state = {
             state = {
                 ...state
             };
-            alert("Could not get note, make sure your search parameter is valid");
+            alert("Could not find note; does not exist");
             break;
 
         case "SEARCH_MANY":
@@ -200,7 +201,13 @@ export const viewNoteReducer = (state = {
             state = {
                 ...state
             };
-            alert("Could not get notes, make sure your search parameters are valid");
+            alert("Could not get notes");
+            break;
+        case "NOTHING":
+        default:
+            state = {
+                ...state
+            };
             break;
     }
 

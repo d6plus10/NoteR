@@ -9,7 +9,7 @@ export default class Note extends React.Component {
 	render() {
 		return (
 			<div>
-				<div>Note ID: {this.props.noteId} Creation Date: {this.props.noteDate}</div>
+				<div>  <font size="6">Note ID:</font> <font size="4">{this.props.noteId}</font> <font size="6">Creation Date:</font> <font size="4">{this.props.noteDate}</font></div>
 				<br/>
 				<AdvTxtArea onChange={this.props.onContentChange} notetext={this.props.noteContents}/>
 				<br/>

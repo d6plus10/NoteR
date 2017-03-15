@@ -14,11 +14,9 @@ export default class NoteSearch extends React.Component {
         return (
             <div>
                 Limit: <input onChange={this.props.limitOnChange}
-                              value={this.props.limit}
-                              type="number" min="1"/>{' '}
+                              value={this.props.limit}/>{' '}
                 Start: <input onChange={this.props.startOnChange}
-                              value={this.props.start}
-                              type="number" min="0"/>{' '}
+                              value={this.props.start}/>{' '}
                 Order:
                 {' '}
                 <select onChange={this.props.orderOnChange}
@@ -30,9 +28,7 @@ export default class NoteSearch extends React.Component {
                 <button onClick={() => this.props.onSearchMany(this.props.start, this.props.limit, this.props.order)}
                         id="add_note_button" className="btn btn-primary">View Many</button> <br/> <br/> <br/>
                 Note ID: <input onChange={this.props.noteIdOnChange}
-                                value={this.props.noteId}
-                                type="number"
-                                min="1"/>
+                                value={this.props.noteId}/>
 
                 <button onClick={() => this.props.onSearchOne(this.props.noteId)}
                     id="add_note_button" className="btn btn-primary">View One</button> <br/>
