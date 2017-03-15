@@ -93,50 +93,94 @@ export function VN_updateSearchId(id) {
 
 //Search Submits
 export function VN_submitSearchOne(id) {
-    return dispatch => {
-        axios.get("/api/note/" + id.toString())
-            .then((response) => {
-                dispatch({
-                    type: "SEARCH_ONE_SUCC",
-                    payload: response.data
+    var isGood = true;
+
+    if (!(isNormalInteger(id))) {
+        isGood = false;
+    }
+
+    if (isGood == false) {
+        alert("Your id parameter is wrong, please check it");
+
+        return {
+            type: "NOTHING"
+        }
+    }
+    else {
+        return dispatch => {
+            axios.get("/api/note/" + id.toString())
+                .then((response) => {
+                    dispatch({
+                        type: "SEARCH_ONE_SUCC",
+                        payload: response.data
+                    })
                 })
-            })
-            .catch(() => {
-                dispatch({
-                    type: "SEARCH_ONE_FAIL"
+                .catch(() => {
+                    dispatch({
+                        type: "SEARCH_ONE_FAIL"
+                    })
                 })
-            })
-    };
+        };
+    }
 }
 
 export function VN_submitSearchMany(start, limit, order) {
 
     //Defaults
-    if (start == "" || start == undefined) {
+    if (start == "") {
         start = "1";
     }
-
-    //Querystring
-    var queryString = "/api/note?" + "start=" + start +"&order=" + order;
-
-    if (limit != "" && limit != undefined) {
-        queryString += "&limit=" + limit;
+    if (limit == "") {
+        limit = "";
     }
 
-    return dispatch => {
-        axios.get(queryString)
-            .then((response) => {
-                dispatch({
-                    type: "SEARCH_MANY_SUCC",
-                    payload: response.data
-                })
-            })
-            .catch(() => {
-                dispatch({
-                    type: "SEARCH_MANY_FAIL"
-                })
-            })
-    };
+    //Verify parameters
+    var isGood = true;
+    if (isNormalInteger(start) == false) {
+        isGood = false;
+    }
+    if (isNormalInteger(limit) == false) {
+        if (limit != "") {
+            isGood = false;
+        }
+    }
+    if (start == "0") {
+        isGood = false;
+    }
+    if (limit == "0") {
+        isGood = false;
+    }
+
+    if (isGood === true) {
+       //Querystring
+
+       var queryString = "/api/note?" + "start=" + start +"&order=" + order;
+
+       if (limit != "" && limit != undefined) {
+           queryString += "&limit=" + limit;
+       }
+
+       return dispatch => {
+           axios.get(queryString)
+               .then((response) => {
+                   dispatch({
+                       type: "SEARCH_MANY_SUCC",
+                       payload: response.data
+                   })
+               })
+               .catch(() => {
+                   dispatch({
+                       type: "SEARCH_MANY_FAIL"
+                   })
+               })
+       };
+   }
+   else {
+        alert("One or more parameters are invalid");
+        return {
+            type: "NOTHING"
+        }
+    }
 }
 
 //Updates specific note in list
@@ -152,4 +196,6 @@ export function VN_updateSpecificNote(index, contents) {
     }
 }
 
-
+function isNormalInteger(str) {
+    return /^\+?(0|[1-9]\d*)$/.test(str);
+}
