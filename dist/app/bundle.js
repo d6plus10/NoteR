@@ -29614,7 +29614,7 @@
 					_react2.default.createElement(
 						"div",
 						{ className: "jumbotron" },
-						_react2.default.createElement(_AdvTxtArea2.default, { contents: this.props.addNoteReducer.notetext, onChange: this.props.updateNote }),
+						_react2.default.createElement(_AdvTxtArea2.default, { notetext: this.props.addNoteReducer.notetext, onChange: this.props.updateNote }),
 						_react2.default.createElement("br", null),
 						_react2.default.createElement(
 							"button",
@@ -29767,33 +29767,88 @@
 	
 	//Search Submits
 	function VN_submitSearchOne(id) {
-	    return function (dispatch) {
-	        _axios2.default.get("/api/note/" + id.toString()).then(function (response) {
-	            dispatch({
-	                type: "SEARCH_ONE_SUCC",
-	                payload: response.data
+	    var isGood = true;
+	
+	    if (!isNormalInteger(id)) {
+	        isGood = false;
+	    }
+	
+	    if (isGood == false) {
+	        alert("Your id parameter is wrong, please check it");
+	
+	        return {
+	            type: "NOTHING"
+	        };
+	    } else {
+	        return function (dispatch) {
+	            _axios2.default.get("/api/note/" + id.toString()).then(function (response) {
+	                dispatch({
+	                    type: "SEARCH_ONE_SUCC",
+	                    payload: response.data
+	                });
+	            }).catch(function () {
+	                dispatch({
+	                    type: "SEARCH_ONE_FAIL"
+	                });
 	            });
-	        }).catch(function () {
-	            dispatch({
-	                type: "SEARCH_ONE_FAIL"
-	            });
-	        });
-	    };
+	        };
+	    }
 	}
 	
 	function VN_submitSearchMany(start, limit, order) {
-	    return function (dispatch) {
-	        _axios2.default.get("/api/note?limit=" + limit.toString() + "&start=" + start + "&order=" + order).then(function (response) {
-	            dispatch({
-	                type: "SEARCH_MANY_SUCC",
-	                payload: response.data
+	
+	    //Defaults
+	    if (start == "") {
+	        start = "1";
+	    }
+	    if (limit == "") {
+	        limit = "";
+	    }
+	
+	    //Verify parameters
+	    var isGood = true;
+	    if (isNormalInteger(start) == false) {
+	        isGood = false;
+	    }
+	    if (isNormalInteger(limit) == false) {
+	        if (limit != "") {
+	            isGood = false;
+	        }
+	    }
+	    if (start == "0") {
+	        isGood = false;
+	    }
+	    if (limit == "0") {
+	        isGood = false;
+	    }
+	
+	    if (isGood === true) {
+	        //Querystring
+	
+	        var queryString = "/api/note?" + "start=" + start + "&order=" + order;
+	
+	        if (limit != "" && limit != undefined) {
+	            queryString += "&limit=" + limit;
+	        }
+	
+	        return function (dispatch) {
+	            _axios2.default.get(queryString).then(function (response) {
+	                dispatch({
+	                    type: "SEARCH_MANY_SUCC",
+	                    payload: response.data
+	                });
+	            }).catch(function () {
+	                dispatch({
+	                    type: "SEARCH_MANY_FAIL"
+	                });
 	            });
-	        }).catch(function () {
-	            dispatch({
-	                type: "SEARCH_MANY_FAIL"
-	            });
-	        });
-	    };
+	        };
+	    } else {
+	        alert("One or more parameters are invalid");
+	        return {
+	            type: "NOTHING"
+	        };
+	    }
 	}
 	
 	//Updates specific note in list
@@ -29807,6 +29862,11 @@
 	            notetext: contents
 	        }
 	    };
+	}
+	
+	function isNormalInteger(str) {
+	    return (/^\+?(0|[1-9]\d*)$/.test(str)
+	    );
 	}
 
 /***/ },
@@ -31633,10 +31693,30 @@
 					_react2.default.createElement(
 						"div",
 						null,
-						"Note ID: ",
-						this.props.noteId,
-						" Creation Date: ",
-						this.props.noteDate
+						"  ",
+						_react2.default.createElement(
+							"font",
+							{ size: "6" },
+							"Note ID:"
+						),
+						" ",
+						_react2.default.createElement(
+							"font",
+							{ size: "4" },
+							this.props.noteId
+						),
+						" ",
+						_react2.default.createElement(
+							"font",
+							{ size: "6" },
+							"Creation Date:"
+						),
+						" ",
+						_react2.default.createElement(
+							"font",
+							{ size: "4" },
+							this.props.noteDate
+						)
 					),
 					_react2.default.createElement("br", null),
 					_react2.default.createElement(_AdvTxtArea2.default, { onChange: this.props.onContentChange, notetext: this.props.noteContents }),
@@ -31729,13 +31809,11 @@
 	                null,
 	                "Limit: ",
 	                _react2.default.createElement("input", { onChange: this.props.limitOnChange,
-	                    value: this.props.limit,
-	                    type: "number", min: "1" }),
+	                    value: this.props.limit }),
 	                ' ',
 	                "Start: ",
 	                _react2.default.createElement("input", { onChange: this.props.startOnChange,
-	                    value: this.props.start,
-	                    type: "number", min: "0" }),
+	                    value: this.props.start }),
 	                ' ',
 	                "Order:",
 	                ' ',
@@ -31770,9 +31848,7 @@
 	                _react2.default.createElement("br", null),
 	                "Note ID: ",
 	                _react2.default.createElement("input", { onChange: this.props.noteIdOnChange,
-	                    value: this.props.noteId,
-	                    type: "number",
-	                    min: "1" }),
+	                    value: this.props.noteId }),
 	                _react2.default.createElement(
 	                    "button",
 	                    { onClick: function onClick() {
@@ -33077,7 +33153,8 @@
 	        case "NOTE_ADD_DB_SUCC":
 	            console.log("Reducer state: $1", state);
 	            state = _extends({}, state, {
-	                id: action.payload.id
+	                id: action.payload.id,
+	                notetext: ""
 	            });
 	            alert("Note: #" + action.payload.id + " successfully added");
 	            break;
@@ -33193,7 +33270,7 @@
 	            break;
 	        case "SEARCH_ONE_FAIL":
 	            state = _extends({}, state);
-	            alert("Could not get note, make sure your search parameter is valid");
+	            alert("Could not find note; does not exist");
 	            break;
 	
 	        case "SEARCH_MANY":
@@ -33207,7 +33284,11 @@
 	            break;
 	        case "SEARCH_MANY_FAIL":
 	            state = _extends({}, state);
-	            alert("Could not get notes, make sure your search parameters are valid");
+	            alert("Could not get notes");
+	            break;
+	        case "NOTHING":
+	        default:
+	            state = _extends({}, state);
 	            break;
 	    }
 	
