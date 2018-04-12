@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A web application that allows you to add, read, update, and delete notes in a database.",
   "scripts": {
-    "start": "mkdir dist && mkdir dist/app && cp src/client/app/html/index.html dist/app/index.html && cp src/client/app/html/bootstrap.css dist/app/bootstrap.css && webpack -d && node ./src/server/www",
+    "start": "npm run build",
     "dev": "webpack-dev-server",
     "build": "webpack -d && node ./src/server/www"
   },
