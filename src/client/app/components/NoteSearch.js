@@ -13,25 +13,40 @@ export default class NoteSearch extends React.Component {
     render() {
         return (
             <div>
-                Limit: <input onChange={this.props.limitOnChange}
-                              value={this.props.limit}/>{' '}
-                Start: <input onChange={this.props.startOnChange}
-                              value={this.props.start}/>{' '}
-                Order:
-                {' '}
-                <select onChange={this.props.orderOnChange}
-                        value={this.props.order}>
+              <div className={"row"}>
+                <div className={"col-md-3"}>
+                  Limit: <input style={{width: 140 + 'px'}}
+                                onChange={this.props.limitOnChange}
+                                value={this.props.limit}/>
+                </div>
+                <div className={"col-md-3"}>
+                  Start: <input style={{width: 140 + 'px'}}
+                                onChange={this.props.startOnChange}
+                                value={this.props.start}/>
+                </div>
+                <div className={"col-md-3"}>
+                  Order:
+                  {' '}
+                  <select style={{width: 140 + 'px'}}
+                          onChange={this.props.orderOnChange}
+                          value={this.props.order}>
                     <option>{this.static.DESC}</option>
                     <option>{this.static.ASC}</option>
-                </select>
-
-                <button onClick={() => this.props.onSearchMany(this.props.start, this.props.limit, this.props.order)}
-                        id="add_note_button" className="btn btn-primary">View Many</button> <br/> <br/> <br/>
-                Note ID: <input onChange={this.props.noteIdOnChange}
-                                value={this.props.noteId}/>
-
-                <button onClick={() => this.props.onSearchOne(this.props.noteId)}
-                    id="add_note_button" className="btn btn-primary">View One</button> <br/>
+                  </select>
+                </div>
+                <div className={"col-md-3"}>
+                  <button onClick={() => this.props.onSearchMany(this.props.start, this.props.limit, this.props.order)}
+                          id="add_note_button" className="btn btn-primary">View Many</button>
+                </div>
+                <div className={"col-md-6"}>
+                  Note ID: <input onChange={this.props.noteIdOnChange}
+                                 value={this.props.noteId}/>
+                </div>
+                <div className={"col-md-6"}>
+                  <button onClick={() => this.props.onSearchOne(this.props.noteId)}
+                          id="add_note_button" className="btn btn-primary">View One</button> <br/>
+                </div>
+              </div>
             </div>
         );
     }

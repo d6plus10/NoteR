@@ -11,10 +11,10 @@ export default class AdvTxtArea extends React.Component {
                       onChange={this.props.onChange}
                       className="new_textarea"
                       placeholder="Note to self..."
-                      rows="15" cols="105"/>
+                      rows="15" cols="105"
+                      style={{width: 100 + '%'}}/>
         );
     }
-
 };
 
 AdvTxtArea.propTypes = {

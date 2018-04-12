@@ -4,6 +4,7 @@ const pg = require('pg');
 const path = require('path');
 var url = require('url');
 
+// Please don't hack this db ;)
 const connectionString = 'postgres://dcwkbhyjesakyx:0768fcd6d82ca170e88241008d608ce0524745cc49d8f36fdecebb6f953b52a8@ec2-54-163-234-140.compute-1.amazonaws.com:5432/d80k3v9e48bpao?ssl=true';
 
 //Non API gets

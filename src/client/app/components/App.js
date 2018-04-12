@@ -13,9 +13,9 @@ export default class App extends React.Component {
 				<Router history={browserHistory}>
 					<Route path={"/"} component={Root}>
 						<IndexRoute component={Home}/>
-						<Route path="home" component={Home}/>
-						<Route path={"note"} component={Notes}/>
-						<Route path={"note/add"} component={AddNote}/>
+						<Route exact path="home" component={Home}/>
+            <Route exact path={"note/add"} component={AddNote}/>
+						<Route exact path={"note"} component={Notes}/>
 						<Route path={"*"} component={NFPage} status={404}/>
 					</Route>
 				</Router>

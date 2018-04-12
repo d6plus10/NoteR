@@ -14,7 +14,9 @@ class AddNote extends React.Component {
 					<div className="jumbotron">
 						<AdvTxtArea notetext={this.props.addNoteReducer.notetext} onChange={this.props.updateNote}/>
 						<br/>
-						<button onClick={() => this.props.addNoteToDB(this.props.addNoteReducer.notetext)} id="add_note_button" className="btn btn-primary">{"Add Note"}</button>
+						<div style={{height: 35 + 'px'}}>
+              <button onClick={() => this.props.addNoteToDB(this.props.addNoteReducer.notetext)} id="add_note_button" className="btn btn-primary">{"Add Note"}</button>
+						</div>
 					</div>
 				</div>
 		);
