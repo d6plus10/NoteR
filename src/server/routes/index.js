@@ -13,9 +13,9 @@ router.get('/', (req, res, next) => {
     __dirname, '..', '..', '..' ,'dist', 'app', 'index.html'));
 });
 
-router.get('/bootstrap.css', (req, res, next) => {
+router.get('/bundle.css', (req, res, next) => {
     res.sendFile(path.join(
-    __dirname, '..', '..', '..' ,'dist', 'app', 'bootstrap.css'));
+    __dirname, '..', '..', '..' ,'dist', 'app', 'bundle.css'));
 });
 
 router.get('/bundle.js', (req, res, next) => {
